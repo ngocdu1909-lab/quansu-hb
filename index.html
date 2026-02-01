@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quân sự Phường Hồng Bàng</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    <div class="main-wrapper">
+        <div class="input-column">
+            <div class="logo">
+                <img src="logo.png" alt="Quốc huy">
+                <h3>PHƯỜNG HỒNG BÀNG</h3>
+                <h4>BỘ QUỐC PHÒNG</h4>
+            </div>
+            <div class="form-group">
+                <input type="text" id="taskInput" placeholder="Nội dung nhiệm vụ...">
+                <input type="datetime-local" id="timeInput">
+                <button onclick="addTask()">GHI NHIỆM VỤ</button>
+            </div>
+        </div>
+        <div class="list-column">
+            <h2>DANH SÁCH CHỈ THỊ</h2>
+            <ul id="taskList"></ul>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
