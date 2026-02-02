@@ -11,6 +11,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
+// Biến kiểm tra xem đã nhập mật mã chưa (mặc định là chưa)
+let isAuthorized = false;
+
 database.ref('tasks').on('value', (snapshot) => {
     const data = snapshot.val();
     let uiList = document.getElementById("taskList");
@@ -34,17 +37,26 @@ database.ref('tasks').on('value', (snapshot) => {
 function addTask() {
     let name = document.getElementById("taskInput").value;
     let time = document.getElementById("timeInput").value;
-    if (!name || !time) return alert("Báo cáo Công chúa, vui lòng nhập đầy đủ nội dung!");
+    if (!name || !time) return alert("Công chúa nhập đủ thông tin nhé!");
     database.ref('tasks').push({ name, time });
     document.getElementById("taskInput").value = "";
     document.getElementById("timeInput").value = "";
 }
 
 function deleteTask(key) {
-    let password = prompt("Nhập Mật mã chỉ huy để xóa nhiệm vụ:");
-    if (password === "HongBang2026") {
-        database.ref('tasks/' + key).remove();
+    // Nếu chưa xác nhận mật mã, yêu cầu nhập lần đầu
+    if (!isAuthorized) {
+        let password = prompt("Nhập Mật mã chỉ huy để kích hoạt quyền xóa:");
+        if (password === "HongBang2026") {
+            isAuthorized = true; // Đánh dấu là đã xác nhận thành công
+            database.ref('tasks/' + key).remove();
+        } else {
+            alert("Sai mật mã! Chỉ quản trị viên mới có quyền xóa.");
+        }
     } else {
-        alert("Mật mã không đúng! Quyền xóa bị từ chối.");
+        // Nếu đã xác nhận rồi, xóa luôn không hỏi nữa
+        if (confirm("Xác nhận xóa nhiệm vụ này?")) {
+            database.ref('tasks/' + key).remove();
+        }
     }
 }
