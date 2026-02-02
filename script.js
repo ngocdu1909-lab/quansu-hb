@@ -68,7 +68,7 @@ setInterval(() => {
             Object.keys(data).forEach((key) => {
                 const task = data[key];
                 const taskTime = new Date(task.time).getTime();
-                if (task.status !== "doing" && taskTime > now && taskTime - now < 300000) {
+                if (task.status !== "doing" && taskTime > now && taskTime - now < 600000) {
                     new Notification("QUÂN SỰ HỒNG BÀNG", { body: "Nhiệm vụ: " + task.name + " sắp đến hạn!", icon: "logo.png" });
                 }
             });
